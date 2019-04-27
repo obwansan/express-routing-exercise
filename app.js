@@ -5,33 +5,29 @@ app.get('/', function(req, res) {
   res.send('Hi there, welcome to my assignment');
 });
 
-app.get('/speak/:animalName', function(req, res) {
-  var animalName = req.params.animalName;
-  var animalNoise;
-
-  if (animalName === 'pig') {
-    animalNoise = 'Oink';
-  } else if (animalName === 'cow') {
-    animalNoise = 'Moo'; 
-  } else if (animalName === 'dog') {
-    animalNoise = 'Woof Woof';
-  } else {
-    res.send('Sorry, page not found...what are you doing with your life?');
+app.get('/speak/:animal', function(req, res) {
+  var noises = {
+    pig: 'Oink!',
+    cow: 'Moo!',
+    sheep: 'Baaa',
+    dog: 'Woof!'
   }
+  var animal = req.params.animal.toLowerCase();
+  var noise = noises[animal];
 
   console.log(req.params);
-  res.send('The ' + animalName + ' says \'' + animalNoise + '\'');
+  res.send('The ' + animal + ' says \'' + noise + '\'');
 });
 
-app.get('/repeat/:word/:number', function(req, res) {
+app.get('/repeat/:word/:times', function(req, res) {
   var word = req.params.word;
-  var number = parseInt(req.params.number);
-  var wordArr = [];
+  var times = parseInt(req.params.times);
+  var result = "";
 
-  for(var i = 0; i < number; i++) {
-    wordArr.push(word + ' ');
+  for(var i = 0; i < times; i++) {
+    result += word + " ";
   }
-  res.send(wordArr.join(' '));
+  res.send(result);
 });
 
 app.get('*', function(req, res) {
